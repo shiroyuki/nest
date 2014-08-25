@@ -2,7 +2,7 @@ import os
 from tori.cli.command import Command
 from jinja2 import Template
 
-class ToriCreateSkeletonApp(Command):
+class FlaskCreateSkeletonApp(Command):
     """ Create a skeleton app """
     def define_arguments(self, argument_parser):
         argument_parser.add_argument('name', help='The name of the app and the app module (e.g. piano_and_violin)')
@@ -23,23 +23,16 @@ class ToriCreateSkeletonApp(Command):
             os.chdir(self.base_path)
 
         self._generate_directories([
-            'config',
             'static/js',
             'static/css',
             'static/scss',
             'static/image',
-            'templates',
-            args.name
+            'templates'
         ])
 
         self._copy_resource('Makefile', 'tori_Makefile')
-        self._copy_resource('server.py', 'tori_server.py')
-        self._copy_resource('config/service.xml', 'tori_service.xml')
-        self._copy_resource('templates/home.html', 'tori_template_home.html')
-        self._write_resource('config/dev.xml', 'tori_config_dev.xml')
-        self._write_resource('config/settings.json', 'tori_settings.json')
-        self._write_resource('{}/controller.py'.format(self.app_name), 'tori_controller.py')
-        self._write('{}/__init__.py'.format(self.app_name), '')
+        self._copy_resource('templates/index.html', 'flask_template_index.html')
+        self._write_resource('server.py', 'flask_server.py')
 
     def _copy_resource(self, where, origin):
         content = resources[origin]
@@ -58,6 +51,9 @@ class ToriCreateSkeletonApp(Command):
 
     def _write(self, where, content):
         if os.path.exists(where):
+            if not self.force_mode:
+                return
+
             os.unlink(where)
 
         with open(where, 'w') as f:
