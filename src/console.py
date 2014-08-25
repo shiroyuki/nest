@@ -18,6 +18,9 @@ class Console(BaseConsole):
         longest_cmd_length = 0
 
         for id in self._commands:
+            if longest_cmd_length < len(id):
+                longest_cmd_length = len(id)
+
             command_class = self._commands[id]
             command_doc   = command_class.__doc__ or '(internal command)'
 
