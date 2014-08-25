@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application>
+    <server>
+        <debug>true</debug>
+        <port>{{ port }}</port>
+        <secret></secret>
+        <!-- <error>app.web.controller.ErrorController</error> -->
+    </server>
+    <use src="settings.json"/>
+    <routes>
+        <!-- Default Static Resources -->
+        <resource id="static" location="static" pattern="/static/**" cache="false"/>
+        <controller id="profiler" class="{{ name }}.controller.Home" pattern="/home"/>
+        <redirection pattern="/" destination="/home"/>
+    </routes>
+    <service>service.xml</service>
+</application>
+

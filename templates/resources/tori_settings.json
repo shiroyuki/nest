@@ -1,0 +1,13 @@
+{
+    "session": {
+        "class": "tori.session.repository.memory.Memory",
+        "params": {}
+    },
+    "db": {
+        "managers": {
+            "default": {
+                "url": "mongodb://localhost/{{ name }}"
+            }
+        }
+    }
+}
